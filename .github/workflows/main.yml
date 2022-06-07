@@ -10,33 +10,39 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build_and_test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3 # Pull-uje kod u virtuelnu masinu.
-    - name: Use Node.js ${{ matrix.node-version }} # Prikazuje poruku u konzoli
-      uses: actions/setup-node@v3 # Instalira node
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci # Clean install
-    - run: npm run build --if-present # Ako postoji skripta, porece je
-    - run: npm test
+      - uses: actions/checkout@v3 # Pull-uje kod u virtuelnu masinu.
+      - name: Use Node.js ${{ matrix.node-version }} # Prikazuje poruku u konzoli
+        uses: actions/setup-node@v3 # Instalira node
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci # Clean install
+      - run: npm run build --if-present # Ako postoji skripta, porece je
+      - run: npm test
 
-    - name: Create tmp artifact directory, adding build artifact
-      run: |
-        mkdir downloads
-        cp build/ downloads/
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: demo-app-build-prod
+          path: |
+            dist
 
-    - name: Upload articafact
-      uses: actions/uplad-artifact@v2
-      with:
-        name: build-for-download
-        path: downloads
+  deploy:
+    name: 'Deploy to Netlify'
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: demo-app-build-prod
+      - uses: jsmrcaga/action-netlify-deploy@v1.1.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.MY_DEMO_APP_NETLIFY_TOKEN }}
+          NETLIFY_DEPLOY_TO_PROD: true     
