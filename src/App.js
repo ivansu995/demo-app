@@ -4,18 +4,24 @@ import React, {useState} from 'react';
 function App() {
   
   const [count, setCount] = useState(0);
-  const counteValue = 1;
+  const counterValue = 1;
   
   return (
     <div className="App">
       <header className="App-header">
         <div>
           <h1>Counter</h1>
-          <p>Add {counteValue} for each click</p>
+          <p>Add {counterValue} for each click</p>
           <p>{count}</p>
           <button 
-            onClick={() => setCount(count + counteValue)}
-            className="custom-button"
+            onClick={() => setCount(count + counterValue)}
+            className="plus-button"
+          >
+            Click me
+          </button>
+          <button
+            onClick={() => setCount(count - counterValue)}
+            className="minus-button"
           >
             Click me
           </button>
