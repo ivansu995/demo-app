@@ -36,6 +36,7 @@ jobs:
             dist
 
   deploy:
+    needs: build_and_test
     name: 'Deploy to Netlify'
     steps:
       - name: Download artifact
