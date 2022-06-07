@@ -11,19 +11,21 @@ function App() {
       <header className="App-header">
         <div>
           <h1>Counter</h1>
-          <p>Add {counterValue} for each click</p>
+          <p>Add or subtract {counterValue} for each click</p>
           <p>{count}</p>
+          
           <button 
             onClick={() => setCount(count + counterValue)}
             className="plus-button"
           >
             Click me
           </button>
+
           <button
             onClick={() => setCount(count - counterValue)}
             className="minus-button"
           >
-            Click me
+            Dont click me
           </button>
         </div>
       </header>

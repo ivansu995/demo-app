@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders h1 element', () => {
   render(<App />);
-  const buttonElement = screen.getByText(/click me/i);
-  expect(buttonElement).toBeInTheDocument();
+  const headerElement = screen.getByText(/counter/i);
+  expect(headerElement).toBeInTheDocument();
+  
+  // const buttonElement = screen.getByText(/click me/i);
+  // expect(buttonElement).toBeInTheDocument();
 });
