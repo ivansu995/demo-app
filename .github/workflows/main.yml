@@ -32,8 +32,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: demo-app-build-prod
-          path: |
-            dist
+          path: build/
 
   deploy:
     needs: build_and_test
