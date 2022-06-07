@@ -30,11 +30,12 @@ jobs:
     - run: npm run build --if-present # Ako postoji skripta, porece je
     - run: npm test
 
-    - name: Create tmp artifact directory, adding build artifact, and upload it
+    - name: Create tmp artifact directory, adding build artifact
       run: |
         mkdir downloads
         cp build/ downloads/
 
+    - name: Upload articafact
       uses: actions/uplad-artifact@v2
       with:
         name: build-for-download
