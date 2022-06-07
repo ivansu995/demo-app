@@ -6,8 +6,8 @@ name: Node.js CI
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  # pull_request:
+  #   branches: [ "master" ]
 
 jobs:
   build_and_test:
@@ -27,27 +27,15 @@ jobs:
       - run: npm ci # Clean install
       - run: npm run build --if-present # Ako postoji skripta, porece je
       - run: npm test
-      - run: echo Trenutno se nalazite u
-      - run: pwd
-      - run: ls -la
-      - run: ls -la build/
 
-  #     - name: Archive production artifacts
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: demo-app-build-prod
-  #         path: build/
-
-  # deploy:
-  #   needs: build_and_test
-  #   runs-on: ubuntu-latest
-  #   name: 'Deploy to Netlify'
-  #   steps:
-  #     - name: Download artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: demo-app-build-prod
-  #     - uses: jsmrcaga/action-netlify-deploy@v1.1.0
-  #       with:
-  #         NETLIFY_AUTH_TOKEN: ${{ secrets.MY_DEMO_APP_NETLIFY_TOKEN }}
-  #         NETLIFY_DEPLOY_TO_PROD: true     
+  deploy:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    name: 'Deploy to Netlify'
+    steps:
+      - uses: action/checkout@v2
+      - uses: jsmrcaga/action-netlify-deploy@v1.1.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.MY_DEMO_APP_NETLIFY_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.DEMO_APP_NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: true     
