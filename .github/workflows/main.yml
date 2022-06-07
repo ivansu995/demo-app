@@ -4,8 +4,8 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ "master" ]
+  # push:
+  #   branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -20,12 +20,22 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - uses: actions/checkout@v3 # Pull-uje kod u virtuelnu masinu.
+    - name: Use Node.js ${{ matrix.node-version }} # Prikazuje poruku u konzoli
+      uses: actions/setup-node@v3 # Instalira node
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
+    - run: npm ci # Clean install
+    - run: npm run build --if-present # Ako postoji skripta, porece je
     - run: npm test
+
+    - name: Create tmp artifact directory, adding build artifact, and upload it
+      run: |
+        mkdir downloads
+        cp build/ downloads/
+
+      uses: actions/uplad-artifact@v2
+      with:
+        name: build-for-download
+        path: downloads
