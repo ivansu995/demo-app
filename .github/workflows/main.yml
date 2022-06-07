@@ -37,6 +37,7 @@ jobs:
 
   deploy:
     needs: build_and_test
+    runs-on: ubuntu-latest
     name: 'Deploy to Netlify'
     steps:
       - name: Download artifact
