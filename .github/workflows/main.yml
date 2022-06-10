@@ -36,4 +36,4 @@ jobs:
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.MY_DEMO_APP_NETLIFY_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.DEMO_APP_NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: true     
+          NETLIFY_DEPLOY_TO_PROD: true

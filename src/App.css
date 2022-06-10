@@ -25,13 +25,22 @@
   color: white;
 }
 
-.custom-button {
+.plus-button {
   width: 100px;
   height: 25px;
   background-color: lightseagreen;
   border-radius: 15px;
   border-width: 0;
   
+}
+
+.minus-button {
+  width: 100px;
+  height: 25px;
+  background-color: red;
+  border-radius: 15px;
+  border-width: 0;
+  margin-left: 15px;
 }
 
 .App-link {
